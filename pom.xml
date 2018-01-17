@@ -101,11 +101,6 @@
             <artifactId>structurizr-spring</artifactId>
             <version>1.0.0-RC4</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.structurizr</groupId>-->
-            <!--<artifactId>structurizr-dot</artifactId>-->
-            <!--<version>1.0.0-RC4</version>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>

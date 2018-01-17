@@ -1,7 +1,3 @@
-spring.data.rest:
-    basePath: /
-    useHalAsDefaultJsonMediaType: false
-
 spring.jpa.hibernate.naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
 spring.jpa.hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
