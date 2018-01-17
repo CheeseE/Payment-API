@@ -10,13 +10,36 @@ import java.util.UUID;
  */
 public interface PaymentService {
 
+    /**
+     * Get all payments.
+     * @return List of Payment objects
+     */
     List<Payment> getAll();
-
+    /**
+     * Get payment by id
+     * @param id uuid of the payment
+     * @return Payment object
+     */
     Payment getById(UUID id);
 
+    /**
+     * Create payment object
+     * @param criteria payment object
+     * @return created payment object
+     */
     Payment create(Payment criteria);
 
+    /**
+     * Update an existing payment
+     * @param id uuid of the payment
+     * @param criteria payment object
+     * @return updated payment object
+     */
     Payment update(UUID id, Payment criteria);
 
+    /**
+     * Delete a payment object
+     * @param id uid of the payment
+     */
     void delete(UUID id);
 }

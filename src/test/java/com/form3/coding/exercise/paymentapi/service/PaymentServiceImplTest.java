@@ -45,6 +45,15 @@ public class PaymentServiceImplTest {
     }
 
     @Test
+    public void testCreate() throws Exception {
+        Payment payment = new Payment();
+        payment.setOrganisationId("org1");
+
+        service.create(payment);
+        verify(repository).save(payment);
+    }
+
+    @Test
     public void testFindAll() throws Exception{
         when(repository.findAll()).thenReturn(Arrays.asList(new Payment()));
         service.getAll();

@@ -77,7 +77,6 @@ public class PaymentController {
     @ResponseStatus(NO_CONTENT)
     @ApiOperation(value = "Delete a payment identified by its id")
     public void delete(@PathVariable UUID id) {
-
         paymentService.delete(id);
     }
 

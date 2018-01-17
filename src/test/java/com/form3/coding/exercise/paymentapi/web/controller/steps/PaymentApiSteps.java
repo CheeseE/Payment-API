@@ -1,29 +1,19 @@
 package com.form3.coding.exercise.paymentapi.web.controller.steps;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.form3.coding.exercise.paymentapi.PaymentApiApplication;
 import com.form3.coding.exercise.paymentapi.model.Payment;
 import com.form3.coding.exercise.paymentapi.web.resource.PaymentCollectionResource;
 import io.restassured.RestAssured;
-import io.restassured.config.ObjectMapperConfig;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
-import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JsonContentAssert;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.skyscreamer.jsonassert.JSONCompare;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.DefaultComparator;
 
 import java.util.UUID;
 
-import static io.restassured.RestAssured.port;
-import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -32,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
  */
 public class PaymentApiSteps {
 
-    private static final String PATH = "v1/payments";
+    private static final String PATH = "v1/payments/";
 
     private Response response;
 
@@ -50,6 +40,16 @@ public class PaymentApiSteps {
     @Step
     public void verifySuccessResponse() {
         response.then().assertThat().statusCode(200);
+    }
+
+    @Step
+    public void verifyNotFounndResponse() {
+        response.then().assertThat().statusCode(404);
+    }
+
+    @Step
+    public void verifyNoContentResponse() {
+        response.then().assertThat().statusCode(204);
     }
 
     @Step
@@ -75,8 +75,32 @@ public class PaymentApiSteps {
     }
 
     @Step
-    public void verifyContent(String payment) {
-        new JsonContentAssert(Payment.class, response.body().asString()).isEqualTo(payment);
+    public void verifyContent(String payment, UUID id, String version) throws Exception {
+        payment = payment.replaceAll("(?<=\"id\": \").*?(?=\")", id.toString());
+        payment = payment.replaceAll("(?<=\"version\": \").*?(?=\")", version);
+        JSONCompare.compareJSON(payment, response.body().asString(), new DefaultComparator(JSONCompareMode.LENIENT));
+    }
+
+    @Step
+    public void updatePayment(String message, UUID id) {
+        response = SerenityRest.rest()
+                .contentType(ContentType.JSON)
+                .body(message)
+                .when().put(PATH + id.toString());
+    }
+
+    @Step
+    public void getPaymentById(UUID id) {
+        response = SerenityRest.rest()
+                .contentType(ContentType.JSON)
+                .when().get(PATH + id.toString());
+    }
+
+    @Step
+    public void deleteById(UUID id) {
+        response = SerenityRest.rest()
+                .contentType(ContentType.JSON)
+                .when().delete(PATH + id.toString());
     }
 
 }

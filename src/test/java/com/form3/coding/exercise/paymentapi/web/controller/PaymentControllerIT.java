@@ -53,8 +53,40 @@ public class PaymentControllerIT {
         String payment = ResourceUtils.readFile("json/payment.json");
         steps.createPayment(payment);
         UUID id = steps.verifyPaymentCreated();
-        steps.verifyContent(payment);
+        steps.verifyContent(payment, id, "1");
 
-
+        steps.getAllPayments();
+        steps.verifySuccessResponse();
+        steps.verifyNumberOfElements(1);
     }
+
+    @Test
+    public void verifyUpdatePayment() throws Exception {
+        String payment = ResourceUtils.readFile("json/payment.json");
+        String updatePayment = ResourceUtils.readFile("json/payment.json");
+        steps.createPayment(payment);
+        UUID id = steps.verifyPaymentCreated();
+
+        steps.updatePayment(updatePayment, id);
+        steps.verifySuccessResponse();
+        steps.getPaymentById(id);
+        steps.verifyContent(updatePayment, id, "2");
+    }
+
+    @Test
+    public void verifyDeletePayment() throws Exception {
+        String payment = ResourceUtils.readFile("json/payment.json");
+        steps.createPayment(payment);
+        UUID id = steps.verifyPaymentCreated();
+        steps.getPaymentById(id);
+        steps.verifySuccessResponse();
+
+        steps.deleteById(id);
+        steps.verifyNoContentResponse();
+
+        steps.getPaymentById(id);
+        steps.verifyNotFounndResponse();
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.form3.coding.exercise.paymentapi.web.controller;
 
+import com.form3.coding.exercise.paymentapi.exception.NotFoundException;
 import com.form3.coding.exercise.paymentapi.web.resource.ApiError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> badRequestHandler(IllegalArgumentException ex,  WebRequest request) {
         LOG.error("Bad request: ", ex);
         return new ResponseEntity<>(new ApiError(HttpStatus.BAD_REQUEST, "Bad request.", ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<Object> notFound(NotFoundException ex,  WebRequest request) {
+        LOG.error("Entity Not found: ", ex);
+        return new ResponseEntity<>(new ApiError(HttpStatus.NOT_FOUND, "Not Found.", ""), HttpStatus.NOT_FOUND);
     }
 
     @Override
