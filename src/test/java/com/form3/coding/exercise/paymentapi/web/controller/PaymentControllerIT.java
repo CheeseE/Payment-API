@@ -1,7 +1,7 @@
 package com.form3.coding.exercise.paymentapi.web.controller;
 
 import com.form3.coding.exercise.paymentapi.PaymentApiApplication;
-import com.form3.coding.exercise.paymentapi.util.ResourceUtils;
+import com.form3.coding.exercise.paymentapi.util.ResourceTestUtils;
 import com.form3.coding.exercise.paymentapi.web.controller.steps.PaymentApiSteps;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -50,7 +50,7 @@ public class PaymentControllerIT {
 
     @Test
     public void verifyCreatePayment() throws Exception {
-        String payment = ResourceUtils.readFile("json/payment.json");
+        String payment = ResourceTestUtils.readFile("json/payment.json");
         steps.createPayment(payment);
         UUID id = steps.verifyPaymentCreated();
         steps.verifyContent(payment, id, "1");
@@ -62,8 +62,8 @@ public class PaymentControllerIT {
 
     @Test
     public void verifyUpdatePayment() throws Exception {
-        String payment = ResourceUtils.readFile("json/payment.json");
-        String updatePayment = ResourceUtils.readFile("json/payment.json");
+        String payment = ResourceTestUtils.readFile("json/payment.json");
+        String updatePayment = ResourceTestUtils.readFile("json/payment.json");
         steps.createPayment(payment);
         UUID id = steps.verifyPaymentCreated();
 
@@ -75,7 +75,7 @@ public class PaymentControllerIT {
 
     @Test
     public void verifyDeletePayment() throws Exception {
-        String payment = ResourceUtils.readFile("json/payment.json");
+        String payment = ResourceTestUtils.readFile("json/payment.json");
         steps.createPayment(payment);
         UUID id = steps.verifyPaymentCreated();
         steps.getPaymentById(id);

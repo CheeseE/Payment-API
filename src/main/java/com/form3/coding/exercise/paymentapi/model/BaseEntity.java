@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -13,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;

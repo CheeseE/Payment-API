@@ -14,7 +14,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class PaymentRepositoryTest {
+public class PaymentRepositoryIT {
 
     @Autowired
     private PaymentRepository repository;

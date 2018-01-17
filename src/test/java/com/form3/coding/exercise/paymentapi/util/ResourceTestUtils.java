@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Attila on 14/01/2018.
  */
-public class ResourceUtils {
+public class ResourceTestUtils {
 
     public static String readFile(final String fileName) throws Exception {
         return Files
